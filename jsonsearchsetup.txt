@@ -1,0 +1,58 @@
+POST https://[service name].search.windows.net/datasources?api-version=2016-09-01-Preview
+Content-Type: application/json
+api-key: [admin key]
+
+{
+    "name" : "clinical-trials-json",
+    "type" : "azureblob",
+    "credentials" : { "connectionString" : "DefaultEndpointsProtocol=https;AccountName=[storage account name];AccountKey=[storage account key];" },
+    "container" : { "name" : "data", "query" : "clinical-trials-json" }
+}
+
+
+
+POST https://[service name].search.windows.net/indexes?api-version=2016-09-01-Preview
+Content-Type: application/json   
+api-key: [admin key] 
+
+{
+ "name": "clinical-trials-json-index",  
+ "fields": [
+  {"name": "FileName", "type": "Edm.String", "searchable": false, "retrievable": true, "facetable": false, "filterable": false, "sortable": true},
+  {"name": "Description", "type": "Edm.String", "searchable": true, "retrievable": false, "facetable": false, "filterable": false, "sortable": false},
+  {"name": "MinimumAge", "type": "Edm.Int32", "searchable": false, "retrievable": true, "facetable": true, "filterable": true, "sortable": true},
+  {"name": "Title", "type": "Edm.String", "searchable": true, "retrievable": true, "facetable": false, "filterable": true, "sortable": true},
+  {"name": "URL", "type": "Edm.String", "searchable": false, "retrievable": false, "facetable": false, "filterable": false, "sortable": false},
+  {"name": "MyURL", "type": "Edm.String", "searchable": false, "retrievable": true, "facetable": false, "filterable": false, "sortable": false},
+  {"name": "Gender", "type": "Edm.String", "searchable": false, "retrievable": true, "facetable": true, "filterable": true, "sortable": false},
+  {"name": "MaximumAge", "type": "Edm.Int32", "searchable": false, "retrievable": true, "facetable": true, "filterable": true, "sortable": true},
+  {"name": "Summary", "type": "Edm.String", "searchable": true, "retrievable": true, "facetable": false, "filterable": false, "sortable": false},
+  {"name": "NCTID", "type": "Edm.String", "key": true, "searchable": true, "retrievable": true, "facetable": false, "filterable": true, "sortable": true},
+  {"name": "Phase", "type": "Edm.String", "searchable": false, "retrievable": true, "facetable": true, "filterable": true, "sortable": false},
+  {"name": "Date", "type": "Edm.String", "searchable": false, "retrievable": true, "facetable": false, "filterable": false, "sortable": true},
+  {"name": "OverallStatus", "type": "Edm.String", "searchable": false, "retrievable": true, "facetable": true, "filterable": true, "sortable": false},
+  {"name": "OrgStudyId", "type": "Edm.String", "searchable": true, "retrievable": true, "facetable": false, "filterable": true, "sortable": false},
+  {"name": "HealthyVolunteers", "type": "Edm.String", "searchable": false, "retrievable": true, "facetable": true, "filterable": true, "sortable": false},
+  {"name": "Keywords", "type": "Collection(Edm.String)", "searchable": true, "retrievable": true, "facetable": true, "filterable": false, "sortable": false}
+ ],
+ "suggesters": [
+  {
+   "name": "sg",
+   "searchMode": "analyzingInfixMatching",
+   "sourceFields": ["Title"]
+  }
+ ]
+}
+
+
+
+POST https://[service name].search.windows.net/indexers?api-version=2016-09-01-Preview
+Content-Type: application/json
+api-key: [admin key]
+
+{
+  "name" : "clinical-trials-json-indexer",
+  "dataSourceName" : "clinical-trials-json",
+  "targetIndexName" : "clinical-trials-json-index",
+  "parameters" : { "configuration" : { "parsingMode" : "jsonArray" } }
+}
