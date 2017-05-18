@@ -1,6 +1,6 @@
 # Azure Storage Integration with CDN, Search and HDInsight
 
-In this sample, we demonstrate how to host, analyze and search content uploaded to Azure Storage blobs. This code was originally used in the [2017 Azure Storage Build Talk]().
+In this sample, we demonstrate how to host, analyze and search content uploaded to Azure Storage blobs. This code was originally used in the [2017 Azure Storage Build Talk](https://channel9.msdn.com/Events/Build/2017/B8008).
 
 If you don't have a Microsoft Azure subscription you can get a FREE trial account [here](https://azure.microsoft.com/free/?WT.mc_id=A7833027B).
 
@@ -10,9 +10,15 @@ To run this sample:
 
 1. Create an [Azure Storage Account](https://docs.microsoft.com/azure/storage/storage-create-storage-account). Select general purpose, not blob storage, for the account type.
 
-2. Unzip 'clinical-trials.zip'. It contains a 100 file subsample of the full clinical trials data set which you can download at [clinicaltrials.gov](https://clinicaltrials.gov/ct2/results?show_down=Y).
+2. Unzip 'clinical-trials.zip'. The files here represent a curated subset of all publically available clinical trials.
 
-3. Create a container named 'data' in your storage account and upload the unzipped files to a virtual directory named 'clinical-trials'. You can do this using [Azure CLI 2.0 with Azure Storage](https://docs.microsoft.com/azure/storage/storage-azure-cli#create-and-manage-blobs). Reference [az storage blob upload-batch](https://docs.microsoft.com/cli/azure/storage/blob#upload-batch) for detailed guidance. You can also take advantage of [AzCopy command-line utility](https://docs.microsoft.com/azure/storage/storage-use-azcopy), Azure Storage client libraries, or other [Azure Storage client tools](https://docs.microsoft.com/azure/storage/storage-explorers).
+    Note: To use the entire set of clinical trials for this sample, visit [clinicaltrials.gov](https://clinicaltrials.gov/ct2/results). Make sure to select the following options when downloading.
+
+    ![](./media/download-trials.jpg)
+
+    You can convert the XML files to text files by running the code in 'convert-clinical-trials.cs', making sure to edit the input and output directories.
+
+3. Create a container named 'data' in your storage account and upload the text files to a virtual directory named 'clinical-trials'. You can do this using [Azure CLI 2.0 with Azure Storage](https://docs.microsoft.com/azure/storage/storage-azure-cli#create-and-manage-blobs). Reference [az storage blob upload-batch](https://docs.microsoft.com/cli/azure/storage/blob#upload-batch) for detailed guidance. You can also take advantage of [AzCopy command-line utility](https://docs.microsoft.com/azure/storage/storage-use-azcopy), Azure Storage client libraries, or other [Azure Storage client tools](https://docs.microsoft.com/azure/storage/storage-explorers).
 
 4. Make sure to [Grant anonymous users permission](https://docs.microsoft.com/azure/storage/storage-manage-access-to-resources#grant-anonymous-users-permissions-to-containers-and-blobs) to the storage container.
 
